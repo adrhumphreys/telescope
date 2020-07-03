@@ -1,0 +1,12 @@
+---
+Name: telescope_requestprocessors
+After:
+  - requestprocessors
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\Director:
+    properties:
+      Middlewares:
+        TelescopeRequestMiddleware: %$TelescopeRequestMiddleware
+  TelescopeRequestMiddleware:
+    class: 'AdrHumphreys\Telescope\Middleware\RequestMiddleware'
