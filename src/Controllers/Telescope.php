@@ -7,7 +7,7 @@ use SilverStripe\Control\Controller;
 class Telescope extends Controller
 {
     /**
-     * @var array
+     * @var string[]
      */
     private static $allowed_actions = [
         'index'

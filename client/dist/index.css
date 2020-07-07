@@ -6537,5 +6537,63 @@ button.close {
   .d-print-inline-flex {
     display: inline-flex !important; } }
 
+svg.icon {
+  width: 1rem;
+  height: 1rem; }
+
+.sidebar .nav-item a {
+  color: #2a5164;
+  padding: 0.5rem 0rem; }
+  .sidebar .nav-item a svg {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 15px;
+    fill: #c3cbd3; }
+  .sidebar .nav-item a[aria-current="page"] {
+    color: #4040c8; }
+    .sidebar .nav-item a[aria-current="page"] svg {
+      fill: #4040c8; }
+
+.card-bg-secondary {
+  background: #f1f7fa; }
+
+.table th,
+.table td {
+  padding: 0.75rem 1.25rem; }
+
+.table.table-sm th,
+.table.table-sm td {
+  padding: 1rem 1.25rem; }
+
+.table th {
+  background-color: #f3f4f6;
+  font-weight: 400;
+  padding: 0.5rem 1.25rem;
+  border-bottom: 0; }
+
+.table:not(.table-borderless) td {
+  border-top: 1px solid #efefef; }
+
+.table.penultimate-column-right th:nth-last-child(2),
+.table.penultimate-column-right td:nth-last-child(2) {
+  text-align: right; }
+
+.table th.table-fit,
+.table td.table-fit {
+  width: 1%;
+  white-space: nowrap; }
+
+.navbar {
+  border-bottom: solid 1px #d5dfe9; }
+
+.trash-panda img {
+  display: none; }
+
+.trash-panda:hover img {
+  display: block;
+  position: fixed;
+  bottom: 10px;
+  right: 10px; }
+
 
 /*# sourceMappingURL=/index.css.map */

@@ -1,0 +1,43 @@
+.card-bg-secondary {
+  background: $card-bg-secondary;
+}
+
+.table {
+  th,
+  td {
+    padding: 0.75rem 1.25rem;
+  }
+
+  &.table-sm {
+    th,
+    td {
+      padding: 1rem 1.25rem;
+    }
+  }
+
+  th {
+    background-color: $table-headers-color;
+    font-weight: 400;
+    padding: 0.5rem 1.25rem;
+    border-bottom: 0;
+  }
+
+  &:not(.table-borderless) {
+    td {
+      border-top: 1px solid $table-border-color;
+    }
+  }
+
+  &.penultimate-column-right {
+    th:nth-last-child(2),
+    td:nth-last-child(2) {
+      text-align: right;
+    }
+  }
+
+  th.table-fit,
+  td.table-fit {
+    width: 1%;
+    white-space: nowrap;
+  }
+}

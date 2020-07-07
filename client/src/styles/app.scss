@@ -52,4 +52,20 @@ $container-max-widths: (
 ) !default;
 
 @import 'node_modules/bootstrap/scss/bootstrap';
+@import "links";
+@import "tables";
 
+.navbar {
+  border-bottom: solid 1px $header-border-color;
+}
+
+.trash-panda img {
+  display: none;
+}
+
+.trash-panda:hover img {
+  display: block;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}

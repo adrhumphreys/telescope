@@ -1,0 +1,26 @@
+svg.icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sidebar .nav-item {
+  a {
+    color: $sidebar-nav-color;
+    padding: 0.5rem 0rem;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 15px;
+      fill: $sidebar-icon-color;
+    }
+
+    &[aria-current="page"] {
+      color: $primary;
+
+      svg {
+        fill: $primary;
+      }
+    }
+  }
+}

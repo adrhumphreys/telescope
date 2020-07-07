@@ -1,5 +1,5 @@
 ---
-Name: telescope_requestprocessors
+Name: telescope-request-processors
 After:
   - requestprocessors
 ---
@@ -14,20 +14,6 @@ SilverStripe\Core\Injector\Injector:
 ---
 Name: telescope-routes
 ---
-SilverStripe\Dev\DevelopmentAdmin:
-  registered_controllers:
-    telescope:
-      controller: AdrHumphreys\Telescope\Controllers\Telescope
-      links:
-        telescope: 'Debugging made cheesy 🔭'
-
----
-Name: telescope-routes-dev_urls-confirmation-exceptions
-After:
-  - 'dev_urls-confirmation-middleware'
----
-SilverStripe\Core\Injector\Injector:
-  DevUrlsConfirmationMiddleware:
-    properties:
-      Bypasses:
-        - '%$SilverStripe\Control\Middleware\ConfirmationMiddleware\UrlPathStartsWith("dev/telescope")'
+SilverStripe\Control\Director:
+  rules:
+    'telescope/$*': 'AdrHumphreys\Telescope\Controllers\Telescope'
