@@ -1,73 +1,26 @@
 {
-  "name": "silverstripe-module-skeleton",
-  "description": "Description of your module",
-  "main": "./client/src/boot/index.js",
-  "author": "You",
+  "name": "adrhumphreys-telescope",
+  "description": "Telescope",
+  "main": "./client/src/index.js",
+  "author": "Adrian",
   "engines": {
     "node": ">=10.x"
   },
   "scripts": {
     "build": "yarn && yarn lint && NODE_ENV=production webpack -p --bail --progress",
-    "dev": "NODE_ENV=development webpack --progress",
-    "watch": "NODE_ENV=development webpack --watch --progress",
-    "css": "WEBPACK_CHILD=css npm run build",
-    "test": "jest",
-    "coverage": "jest --coverage",
-    "lock": "npm-shrinkwrap --dev",
-    "lint": "eslint client/src && sass-lint client/src",
-    "lint-js": "eslint client/src",
-    "lint-js-fix": "eslint client/src --fix",
-    "lint-sass": "sass-lint client/src"
-  },
-  "dependencies": {
-    "babel-polyfill": "6.7.4",
-    "react": "^16.8.3"
+    "dev": "parcel client/src/index.js --out-dir client/dist/ --host wow.test --port 8080",
+    "watch": "NODE_ENV=development webpack --watch --progress"
   },
   "devDependencies": {
-    "@silverstripe/eslint-config": "^0.0.5",
-    "@silverstripe/webpack-config": "^1.0.0",
-    "babel-jest": "^23.6.0",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.10.0",
-    "jest-cli": "^23.6.0"
+    "@babel/core": "^7.10.4",
+    "sass": "^1.26.10"
   },
-  "babel": {
-    "presets": [
-      "env",
-      "react"
-    ],
-    "plugins": [
-      "transform-object-rest-spread"
-    ]
-  },
-  "jest": {
-    "roots": [
-      "client/src"
-    ],
-    "modulePaths": [
-      "client/src",
-      "../admin/client/src",
-      "../admin/node_modules",
-      "../silverstripe/admin/client/src",
-      "../silverstripe/admin/node_modules",
-      "../../silverstripe/admin/client/src",
-      "../../silverstripe/admin/node_modules"
-    ],
-    "collectCoverageFrom": [
-      "**/*.{js,jsx}",
-      "!**/node_modules/**",
-      "!**/boot/**",
-      "!**/bundles/**",
-      "!**/legacy/**",
-      "!**/vendor/**",
-      "!**/*-test.{js,jsx}",
-      "!**/*-story.{js,jsx}"
-    ],
-    "testMatch": [
-      "**/tests/**/*-test.js?(x)"
-    ],
-    "transform": {
-      ".*": "babel-jest"
-    }
+  "dependencies": {
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "bootstrap": "^5.0.0-alpha1",
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

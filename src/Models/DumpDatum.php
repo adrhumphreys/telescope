@@ -2,6 +2,7 @@
 
 namespace AdrHumphreys\Telescope\Models;
 
+use AdrHumphreys\Telescope\Middleware\RequestMiddleware;
 use SilverStripe\ORM\DataObject;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -22,6 +23,13 @@ class DumpDatum extends DataObject
         'Dump' => 'Text',
     ];
 
+    /**
+     * @var array
+     */
+    private static $belongs_to = [
+        'RequestDatum' => RequestDatum::class,
+    ];
+
     public static function dump($anything): void
     {
         VarDumper::dump($anything);
@@ -29,6 +37,9 @@ class DumpDatum extends DataObject
 
     public static function recordDump(string $dump): void
     {
-        static::create(['Dump' => $dump])->write();
+        static::create([
+            'Dump' => $dump,
+            'RequestDatumID' => RequestMiddleware::getRequestDatumID() ?? 0,
+        ])->write();
     }
 }

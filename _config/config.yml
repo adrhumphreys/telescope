@@ -10,3 +10,24 @@ SilverStripe\Core\Injector\Injector:
         TelescopeRequestMiddleware: %$TelescopeRequestMiddleware
   TelescopeRequestMiddleware:
     class: 'AdrHumphreys\Telescope\Middleware\RequestMiddleware'
+
+---
+Name: telescope-routes
+---
+SilverStripe\Dev\DevelopmentAdmin:
+  registered_controllers:
+    telescope:
+      controller: AdrHumphreys\Telescope\Controllers\Telescope
+      links:
+        telescope: 'Debugging made cheesy 🔭'
+
+---
+Name: telescope-routes-dev_urls-confirmation-exceptions
+After:
+  - 'dev_urls-confirmation-middleware'
+---
+SilverStripe\Core\Injector\Injector:
+  DevUrlsConfirmationMiddleware:
+    properties:
+      Bypasses:
+        - '%$SilverStripe\Control\Middleware\ConfirmationMiddleware\UrlPathStartsWith("dev/telescope")'

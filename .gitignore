@@ -1,2 +1,4 @@
 node_modules
 resources
+.cache
+yarn-error.log
