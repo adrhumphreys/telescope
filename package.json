@@ -7,9 +7,8 @@
     "node": ">=10.x"
   },
   "scripts": {
-    "build": "yarn && yarn lint && NODE_ENV=production webpack -p --bail --progress",
-    "dev": "parcel client/src/index.js --out-dir client/dist/ --host wow.test --port 8080",
-    "watch": "NODE_ENV=development webpack --watch --progress"
+    "build": "parcel build client/src/index.js --out-dir client/dist/",
+    "dev": "parcel client/src/index.js --out-dir client/dist/ --host localhost --port 8080"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
