@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Requests from "./Requests";
+import Request from "./Request";
 import Dumps from "./Dumps";
 import { Router } from "@reach/router";
-import { REQUESTS_PATH, DUMPS_PATH } from "../constants";
+import { REQUESTS_PATH, DUMPS_PATH, REQUEST_PATH } from "../constants";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           </div>
           <div className="col-10">
             <Router>
-              <Requests path={REQUESTS_PATH} />
+              <Requests path={REQUESTS_PATH} default />
+              <Request path={REQUEST_PATH} />
               <Dumps path={DUMPS_PATH} />
             </Router>
           </div>

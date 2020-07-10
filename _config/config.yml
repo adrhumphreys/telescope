@@ -16,4 +16,5 @@ Name: telescope-routes
 ---
 SilverStripe\Control\Director:
   rules:
-    'telescope/$*': 'AdrHumphreys\Telescope\Controllers\Telescope'
+    'telescope/api//$Action/$ID': 'AdrHumphreys\Telescope\Controllers\Api'
+    'telescope/$*/$*': 'AdrHumphreys\Telescope\Controllers\Telescope'

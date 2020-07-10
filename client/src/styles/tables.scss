@@ -1,11 +1,21 @@
-.card-bg-secondary {
-  background: $card-bg-secondary;
+.table-header {
+  background-color: white;
+  margin-bottom: 0;
+  padding: 1rem 1.25rem;
+  font-size: 1.1875rem;
+}
+
+.table-responsive {
+  border-radius: 0.25rem;
 }
 
 .table {
+  background: $card-bg-secondary;
+  border-radius: 5px;
+
   th,
   td {
-    padding: 0.75rem 1.25rem;
+    padding: 1rem 1.25rem;
   }
 
   &.table-sm {
@@ -18,8 +28,10 @@
   th {
     background-color: $table-headers-color;
     font-weight: 400;
-    padding: 0.5rem 1.25rem;
     border-bottom: 0;
+    font-size: .95rem;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
   }
 
   &:not(.table-borderless) {
@@ -32,6 +44,19 @@
     th:nth-last-child(2),
     td:nth-last-child(2) {
       text-align: right;
+    }
+  }
+
+  &--light tbody {
+    background-color: #fff;
+  }
+
+  &--request {
+    font-size: 1rem;
+
+    td {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
     }
   }
 

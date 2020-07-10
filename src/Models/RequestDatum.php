@@ -18,6 +18,8 @@ use SilverStripe\ORM\HasManyList;
  * @property string Response the response body
  * @property string SessionBefore the response body
  * @property string SessionAfter the response body
+ * @property string IPAddress the users IP
+ * @property string MemoryUsed the peak of memory allocated by PHP
  * @method DumpDatum[]|HasManyList Dumps()
  */
 class RequestDatum extends DataObject
@@ -43,6 +45,8 @@ class RequestDatum extends DataObject
         'Response' => 'Text',
         'SessionBefore' => 'Text',
         'SessionAfter' => 'Text',
+        'IPAddress' => 'Varchar(20)',
+        'MemoryUsed' => 'Varchar(10)',
     ];
 
     /**
@@ -51,4 +55,37 @@ class RequestDatum extends DataObject
     private static $has_many = [
         'Dumps' => DumpDatum::class,
     ];
+
+    public function getAPIData(): array
+    {
+        $dumps = [];
+        $dumpStyle = '';
+
+        if ($this->Dumps()->count() > 0) {
+            $dumpStyle = DumpDatum::getDumpStyle();
+
+            foreach ($this->Dumps() as $dump) {
+                $dumps[] = $dump->getAPIData();
+            }
+        }
+
+        return [
+            'happened' => $this->Time,
+            'hostname' => $this->HostName,
+            'method' => $this->Method,
+            'status' => $this->ResponseCode,
+            'path' => $this->Path,
+            'duration' => $this->Duration,
+            'requestHeaders' => $this->RequestHeaders,
+            'responseHeaders' => $this->ResponseHeaders,
+            'payload' => $this->Payload,
+            'response' => $this->Response,
+            'sessionBefore' => $this->SessionBefore,
+            'sessionAfter' => $this->SessionAfter,
+            'ipAddress' => $this->IPAddress,
+            'memoryUsed' => $this->MemoryUsed,
+            'dumps' => $dumps,
+            'dumpStyle' => $dumpStyle,
+        ];
+    }
 }

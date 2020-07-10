@@ -54,11 +54,31 @@ $container-max-widths: (
 ) !default;
 
 @import 'node_modules/bootstrap/scss/bootstrap';
+@import "~balloon-css/src/balloon";
 @import "links";
 @import "tables";
+@import "card";
 
 .navbar {
   border-bottom: solid 1px $header-border-color;
+}
+
+.control-action svg {
+  fill: $control-action-icon-color;
+  width: 1.2rem;
+  height: 1.2rem;
+
+  &:hover {
+    fill: $primary;
+  }
+}
+
+.tooltip-big-text {
+  --balloon-font-size: 1rem;
+}
+
+.happened {
+  text-transform: capitalize;
 }
 
 .trash-panda img {
@@ -70,4 +90,21 @@ $container-max-widths: (
   position: fixed;
   bottom: 10px;
   right: 10px;
+}
+
+.nav-pills .nav-link.active {
+  background: none;
+  color: $pill-link-active;
+  border-bottom: solid 2px $primary;
+}
+
+.nav-pills .nav-link {
+  font-size: 0.9rem;
+  border-radius: 0;
+  padding: 0.75rem 1.25rem;
+  color: $body-color;
+}
+
+pre.sf-dump .sf-dump-ellipsis {
+  max-width: 100%;
 }

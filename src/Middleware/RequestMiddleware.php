@@ -10,7 +10,7 @@ use SilverStripe\Control\Middleware\HTTPMiddleware;
 class RequestMiddleware implements HTTPMiddleware
 {
     private const IGNORED_PATHs = [
-        'dev/telescope',
+        'telescope',
         'dev/build'
     ];
 
@@ -45,6 +45,8 @@ class RequestMiddleware implements HTTPMiddleware
         $requestDatum->RequestHeaders = json_encode($request->getHeaders());
         $requestDatum->Payload = $request->getBody();
         $requestDatum->SessionBefore = json_encode($request->getSession()->getAll());
+        $requestDatum->IPAddress = $request->getIP();
+        $requestDatum->MemoryUsed = round(memory_get_peak_usage(true) / 1024 / 1025, 1);
         $requestDatum->write();
         self::$requestDatumID = $requestDatum->ID;
 
@@ -73,7 +75,7 @@ class RequestMiddleware implements HTTPMiddleware
     private static function shouldProcessPath(string $path): bool
     {
         foreach(self::IGNORED_PATHs as $ignoredPath) {
-            if (strpos($path, $ignoredPath) !== false){
+            if (strpos($path, $ignoredPath) === 0){
                 return false;
             }
         }
