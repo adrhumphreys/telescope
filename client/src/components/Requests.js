@@ -14,7 +14,7 @@ function requestRow(request) {
           {method}
         </span>
       </td>
-      <td className="">{path}</td>
+      <td className="table-path">{path}</td>
       <td className="table-fit">
         <span className="badge bg-secondary text-dark">{status}</span>
       </td>

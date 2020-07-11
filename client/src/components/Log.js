@@ -24,7 +24,7 @@ function Log(props) {
     return <EmptyContent title="Logs" />;
   }
 
-  const { entry, id, level, created, requestID, context } = log;
+  const { entry, level, created, requestID, context } = log;
   const parsedEntry = JSON.parse(entry);
   const humanHappened = formatRelative(new Date(created), new Date());
   const badgeStyles = badgeFromLevel(level);

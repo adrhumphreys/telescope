@@ -4,6 +4,7 @@ import { formatRelative } from "date-fns";
 import { Tabs, Tab, Panel } from "./Tabs";
 import JSONView from "./JSONView";
 import Highlight from "./Highlight";
+import { logTable } from "./Logs";
 
 function renderDump(dumpObj, dumpStyle) {
   const { dump, id } = dumpObj;
@@ -15,6 +16,20 @@ function renderDump(dumpObj, dumpStyle) {
         style={{ display: "none" }}
       />
       <div dangerouslySetInnerHTML={{ __html: dump }} />
+    </div>
+  );
+}
+
+function renderRelations(request) {
+  const { logs } = request;
+  return (
+    <div className="mt-4 bg-light">
+      <Tabs>
+        <ul className="nav nav-pills">
+          <Tab>Logs</Tab>
+        </ul>
+        <Panel>{logTable(logs)}</Panel>
+      </Tabs>
     </div>
   );
 }
@@ -37,7 +52,7 @@ function renderCode(request) {
           <Tab>Response headers</Tab>
           <Tab>Session before</Tab>
           <Tab>Session after</Tab>
-          <Tab>Payload</Tab>
+          {payload && <Tab>Payload</Tab>}
           <Tab>Response</Tab>
         </ul>
         <Panel>
@@ -60,15 +75,13 @@ function renderCode(request) {
             <JSONView data={sessionAfter} shouldExpand={true} />
           </div>
         </Panel>
-        <Panel>
-          <div className="tab-content">
+        {payload && (
+          <Panel>
             <Highlight language="php">{payload}</Highlight>
-          </div>
-        </Panel>
+          </Panel>
+        )}
         <Panel>
-          <div className="tab-content">
-            <Highlight language="html">{response}</Highlight>
-          </div>
+          <Highlight language="html">{response}</Highlight>
         </Panel>
       </Tabs>
     </div>
@@ -154,6 +167,7 @@ function Request(props) {
       </table>
 
       {renderCode(request)}
+      {renderRelations(request)}
     </div>
   );
 }

@@ -1,37 +1,65 @@
 import React from "react";
 import { Link } from "@reach/router";
-import { REQUESTS_PATH, DUMPS_PATH, LOGS_PATH } from "../constants";
+import { BASE_PATH, REQUESTS_PATH, DUMPS_PATH, LOGS_PATH } from "../constants";
 import { RequestIcon, DumpIcon, LogIcon } from "../helpers/icons";
+import classNames from "classnames";
+
+const NavLink = (props) => {
+  const { className } = props;
+  return (
+    <Link
+      {...props}
+      getProps={(p) => {
+        const {
+          isCurrent,
+          isPartiallyCurrent,
+          href,
+          location: { pathname },
+        } = p;
+        let mainRoute =
+          href && href.includes(REQUESTS_PATH) && pathname === BASE_PATH;
+        return {
+          className: classNames(
+            {
+              active: isCurrent || isPartiallyCurrent || mainRoute,
+            },
+            className
+          ),
+        };
+      }}
+    />
+  );
+};
 
 function Sidebar() {
   return (
     <ul className="nav flex-column">
       <li className="nav-item">
-        <Link
+        <NavLink
           to={REQUESTS_PATH}
           className="nav-link d-flex align-items-center pt-0"
         >
           <RequestIcon />
           Requests
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link
+        <NavLink
           to={DUMPS_PATH}
           className="nav-link d-flex align-items-center pt-0"
         >
           <DumpIcon />
           Dumps
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link
+        <NavLink
           to={LOGS_PATH}
           className="nav-link d-flex align-items-center pt-0"
         >
           <LogIcon />
           Logs
-        </Link>
+        </NavLink>
       </li>
     </ul>
   );

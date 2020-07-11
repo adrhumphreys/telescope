@@ -1,5 +1,5 @@
 export const BASE_PATH = "/telescope/";
-export const REQUESTS_PATH = BASE_PATH;
+export const REQUESTS_PATH = BASE_PATH + "requests";
 export const REQUEST_PATH = BASE_PATH + "requests/:requestID";
 export const REQUEST_PATH_LINK = BASE_PATH + "requests/";
 export const DUMPS_PATH = BASE_PATH + "dumps";

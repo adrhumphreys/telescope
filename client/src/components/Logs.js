@@ -36,6 +36,26 @@ function logRow(log) {
   );
 }
 
+export function logTable(logs) {
+  const logRender = logs.map(logRow);
+
+  return (
+    <div className="table-responsive">
+      <table className="table table--light mb-0 table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">Entry</th>
+            <th scope="col">Level</th>
+            <th scope="col">Happened</th>
+            <th scope="col" />
+          </tr>
+        </thead>
+        <tbody>{logRender}</tbody>
+      </table>
+    </div>
+  );
+}
+
 function Logs() {
   const [logs, setLogs] = useState(null);
 
@@ -47,24 +67,10 @@ function Logs() {
     return <EmptyContent title="Logs" />;
   }
 
-  const logRender = logs.map(logRow);
-
   return (
     <div className="background-secondary box-shadow">
       <h1 className="header">Logs</h1>
-      <div className="table-responsive">
-        <table className="table table--light mb-0 table-borderless">
-          <thead>
-            <tr>
-              <th scope="col">Entry</th>
-              <th scope="col">Level</th>
-              <th scope="col">Happened</th>
-              <th scope="col" />
-            </tr>
-          </thead>
-          <tbody>{logRender}</tbody>
-        </table>
-      </div>
+      {logTable(logs)}
     </div>
   );
 }

@@ -6,7 +6,7 @@ svg.icon {
 .sidebar .nav-item {
   a {
     color: $sidebar-nav-color;
-    padding: 0.5rem 0rem;
+    padding: 0.5rem 0;
 
     svg {
       width: 1rem;
@@ -15,7 +15,7 @@ svg.icon {
       fill: $sidebar-icon-color;
     }
 
-    &[aria-current="page"] {
+    &.active {
       color: $primary;
 
       svg {

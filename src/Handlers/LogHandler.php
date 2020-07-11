@@ -35,6 +35,7 @@ class LogHandler extends AbstractProcessingHandler
         $logDatum->Level = (string) $record['level_name'];
         $logDatum->Context = (string) $this->getContext($record['extra']['file'], $record['extra']['line']);
         $logDatum->RequestDatumID = RequestMiddleware::getRequestDatumID();
+
         $logDatum->write();
     }
 
