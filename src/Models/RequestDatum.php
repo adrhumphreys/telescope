@@ -21,6 +21,7 @@ use SilverStripe\ORM\HasManyList;
  * @property string IPAddress the users IP
  * @property string MemoryUsed the peak of memory allocated by PHP
  * @method DumpDatum[]|HasManyList Dumps()
+ * @method LogDatum[]|HasManyList Logs()
  */
 class RequestDatum extends DataObject
 {
@@ -54,6 +55,7 @@ class RequestDatum extends DataObject
      */
     private static $has_many = [
         'Dumps' => DumpDatum::class,
+        'Logs' => LogDatum::class,
     ];
 
     public function getAPIData(): array
@@ -67,6 +69,12 @@ class RequestDatum extends DataObject
             foreach ($this->Dumps() as $dump) {
                 $dumps[] = $dump->getAPIData();
             }
+        }
+
+        $logs = [];
+
+        foreach ($this->Logs() as $log) {
+            $logs[] = $log->getAPIData();
         }
 
         return [
@@ -86,6 +94,7 @@ class RequestDatum extends DataObject
             'memoryUsed' => $this->MemoryUsed,
             'dumps' => $dumps,
             'dumpStyle' => $dumpStyle,
+            'logs' => $logs,
         ];
     }
 }

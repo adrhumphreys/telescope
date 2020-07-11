@@ -58,6 +58,26 @@ $container-max-widths: (
 @import "links";
 @import "tables";
 @import "card";
+@import "code";
+
+.background-secondary {
+  background-color: $card-bg-secondary;
+}
+
+.box-shadow {
+  box-shadow: 0 2px 3px $card-shadow-color;
+}
+
+.header {
+  background-color: white;
+  margin-bottom: 0;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.1875rem;
+}
+
+a {
+  text-decoration: none;
+}
 
 .navbar {
   border-bottom: solid 1px $header-border-color;
@@ -107,4 +127,9 @@ $container-max-widths: (
 
 pre.sf-dump .sf-dump-ellipsis {
   max-width: 100%;
+}
+
+.tab-content {
+  background-color: #fff;
+  padding: 1rem;
 }
