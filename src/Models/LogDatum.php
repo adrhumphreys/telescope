@@ -10,7 +10,7 @@ use SilverStripe\ORM\DataObject;
  * @property string Context
  * @property int RequestDatumID
  */
-class LogDatum extends DataObject
+class LogDatum extends DataObject implements APIResponse
 {
     /**
      * @var string

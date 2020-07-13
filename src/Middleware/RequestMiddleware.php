@@ -11,7 +11,10 @@ class RequestMiddleware implements HTTPMiddleware
 {
     private const IGNORED_PATHs = [
         'telescope',
-        'dev/build'
+        'dev/build',
+        // When working on the frontend dev tools will often make requests for .map files which
+        // will 404 and be recorded here
+        '.map',
     ];
 
     /**

@@ -2,14 +2,20 @@
 
 namespace AdrHumphreys\Telescope\Controllers;
 
+use AdrHumphreys\Telescope\Models\APIResponse;
 use AdrHumphreys\Telescope\Models\LogDatum;
 use AdrHumphreys\Telescope\Models\RequestDatum;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\ORM\DataObject;
 
 class Api extends Controller
 {
+    // We want to limit the amount of data shown as it can get large quick
+    // This is only applied to top level list responses and not detail ones
+    private const LIMIT = 100;
+
     /**
      * @var string[]
      */
@@ -27,14 +33,14 @@ class Api extends Controller
     public function requests(HTTPRequest $request): HTTPResponse
     {
         if ($requestID = $request->param('ID')) {
-            return $this->getRequestDetails((int) $requestID);
+            return $this->genericDetailResponse(RequestDatum::class, (int) $requestID);
         }
 
         $data = [];
         $requests = RequestDatum::get()
-            ->exclude('ResponseCode', 404)
-            ->sort('Time', 'DESC')
-            ->limit(10);
+            ->exclude('Path:PartialMatch', '.map')
+            ->limit(self::LIMIT)
+            ->sort('Time', 'DESC');
 
         /** @var RequestDatum $request */
         foreach ($requests as $request) {
@@ -51,27 +57,16 @@ class Api extends Controller
         return $this->generateJSONResponse($data);
     }
 
-    private function getRequestDetails(int $requestID): HTTPResponse
-    {
-        $request = RequestDatum::get_by_id($requestID);
-
-        if ($request === null) {
-            $this->httpError(404, 'No request found for request ' . $requestID);
-        }
-
-        return $this->generateJSONResponse($request->getAPIData());
-    }
-
     public function logs(HTTPRequest $request): HTTPResponse
     {
         if ($logID = $request->param('ID')) {
-            return $this->getLogDetails((int) $logID);
+            return $this->genericDetailResponse(LogDatum::class, (int) $logID);
         }
 
         $data = [];
         $logs = LogDatum::get()
             ->sort('Created', 'DESC')
-            ->limit(10);
+            ->limit(self::LIMIT);
 
         /** @var LogDatum $log */
         foreach ($logs as $log) {
@@ -86,15 +81,19 @@ class Api extends Controller
         return $this->generateJSONResponse($data);
     }
 
-    private function getLogDetails(int $logID): HTTPResponse
+    private function genericDetailResponse(string $className, int $id): HTTPResponse
     {
-        $log = LogDatum::get_by_id($logID);
+        $object = DataObject::get_by_id($className, $id);
 
-        if ($log === null) {
-            $this->httpError(404, 'No log found for log id ' . $logID);
+        if ($object === null) {
+            $this->httpError(404, 'No ' . $className .' found for id ' . $id);
         }
 
-        return $this->generateJSONResponse($log->getAPIData(true));
+        if (!$object instanceof APIResponse) {
+            $this->httpError(404, 'No api response available for ' . $className);
+        }
+
+        return $this->generateJSONResponse($object->getAPIData(true));
     }
 
     private function generateJSONResponse(?array $data): HTTPResponse

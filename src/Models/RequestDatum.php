@@ -23,7 +23,7 @@ use SilverStripe\ORM\HasManyList;
  * @method DumpDatum[]|HasManyList Dumps()
  * @method LogDatum[]|HasManyList Logs()
  */
-class RequestDatum extends DataObject
+class RequestDatum extends DataObject implements APIResponse
 {
     /**
      * @var string
@@ -58,7 +58,7 @@ class RequestDatum extends DataObject
         'Logs' => LogDatum::class,
     ];
 
-    public function getAPIData(): array
+    public function getAPIData(bool $includeRelations = false): array
     {
         $dumps = [];
         $dumpStyle = '';

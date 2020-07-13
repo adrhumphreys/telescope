@@ -11,7 +11,7 @@ use Symfony\Component\VarDumper\VarDumper;
 /**
  * @property string Dump
  */
-class DumpDatum extends DataObject
+class DumpDatum extends DataObject implements APIResponse
 {
     /**
      * @var string
