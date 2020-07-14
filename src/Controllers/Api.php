@@ -4,6 +4,7 @@ namespace AdrHumphreys\Telescope\Controllers;
 
 use AdrHumphreys\Telescope\Models\APIResponse;
 use AdrHumphreys\Telescope\Models\LogDatum;
+use AdrHumphreys\Telescope\Models\QueryDatum;
 use AdrHumphreys\Telescope\Models\RequestDatum;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
@@ -23,6 +24,7 @@ class Api extends Controller
         'index',
         'requests',
         'logs',
+        'queries',
     ];
 
     public function index()
@@ -32,8 +34,8 @@ class Api extends Controller
 
     public function requests(HTTPRequest $request): HTTPResponse
     {
-        if ($requestID = $request->param('ID')) {
-            return $this->genericDetailResponse(RequestDatum::class, (int) $requestID);
+        if ($id = $request->param('ID')) {
+            return $this->genericDetailResponse(RequestDatum::class, (int) $id);
         }
 
         $data = [];
@@ -59,8 +61,8 @@ class Api extends Controller
 
     public function logs(HTTPRequest $request): HTTPResponse
     {
-        if ($logID = $request->param('ID')) {
-            return $this->genericDetailResponse(LogDatum::class, (int) $logID);
+        if ($id = $request->param('ID')) {
+            return $this->genericDetailResponse(LogDatum::class, (int) $id);
         }
 
         $data = [];
@@ -75,6 +77,30 @@ class Api extends Controller
                 'entry' => $log->Entry,
                 'level' => $log->Level,
                 'created' => $log->Created,
+            ];
+        }
+
+        return $this->generateJSONResponse($data);
+    }
+
+    public function queries(HTTPRequest $request): HTTPResponse
+    {
+        if ($id = $request->param('ID')) {
+            return $this->genericDetailResponse(QueryDatum::class, (int) $id);
+        }
+
+        $data = [];
+        $queries = QueryDatum::get()
+            ->sort('Created', 'DESC')
+            ->limit(self::LIMIT);
+
+        /** @var QueryDatum $query */
+        foreach ($queries as $query) {
+            $data[] = [
+                'id' => $query->ID,
+                'queries' => json_decode($query->Queries),
+                'amount' => $query->Amount,
+                'created' => $query->Created,
             ];
         }
 

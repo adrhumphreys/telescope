@@ -2,6 +2,8 @@
 
 namespace AdrHumphreys\Telescope\Middleware;
 
+use AdrHumphreys\Telescope\Database\RecordedQueries;
+use AdrHumphreys\Telescope\Models\QueryDatum;
 use AdrHumphreys\Telescope\Models\RequestDatum;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
@@ -12,9 +14,6 @@ class RequestMiddleware implements HTTPMiddleware
     private const IGNORED_PATHs = [
         'telescope',
         'dev/build',
-        // When working on the frontend dev tools will often make requests for .map files which
-        // will 404 and be recorded here
-        '.map',
     ];
 
     /**
@@ -64,6 +63,18 @@ class RequestMiddleware implements HTTPMiddleware
         $requestDatum->SessionAfter = json_encode($request->getSession()->getAll());
 
         $requestDatum->write();
+
+        $queries = RecordedQueries::get();
+
+        if (count($queries) > 0) {
+            // Record the queries
+            QueryDatum::create([
+                'Queries' => json_encode($queries),
+                'Amount' => count($queries),
+                'RequestDatumID' => $requestDatum->ID,
+            ])->write();
+        }
+
         return $response;
     }
 

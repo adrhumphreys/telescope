@@ -26,3 +26,13 @@ SilverStripe\Core\Injector\Injector:
   Psr\Log\LoggerInterface:
     calls:
       AddTelescopeLogHandler: [ pushHandler, [ %$AdrHumphreys\Telescope\Handlers\LogHandler ] ]
+
+---
+Name: telescope-proxydb
+After: 'databaseconnectors'
+---
+SilverStripe\Core\Injector\Injector:
+  MySQLPDODatabase:
+    class: 'AdrHumphreys\Telescope\Database\MySQLQueryRecorder'
+  MySQLDatabase:
+    class: 'AdrHumphreys\Telescope\Database\MySQLQueryRecorder'
