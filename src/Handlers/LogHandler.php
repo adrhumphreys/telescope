@@ -14,18 +14,23 @@ class LogHandler extends AbstractProcessingHandler
 {
     use Configurable;
 
+    private const preSkippedClassPartials = ['AdrHumphreys\\Telescope'];
+
     /**
      * @config
      * @var string[]
      */
-    private static $skipClassesPartials = ['AdrHumphreys\\Telescope'];
+    private static $skipClassesPartials;
 
     /*
      * Add the info to know where the message was sent from
      */
     public function handle(array $record)
     {
-        $this->pushProcessor(new IntrospectionProcessor(Logger::DEBUG, self::config()->get('skipClassesPartials')));
+        $userSkipped = static::config()->get('skipClassesPartials');
+        $skippedClassesPartials = array_merge($userSkipped ?? [], self::preSkippedClassPartials);
+        $this->pushProcessor(new IntrospectionProcessor(Logger::DEBUG, $skippedClassesPartials));
+
         return parent::handle($record);
     }
 
