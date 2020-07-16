@@ -6,6 +6,7 @@ export const DUMPS_PATH = BASE_PATH + "dumps";
 export const LOGS_PATH = BASE_PATH + "logs";
 export const LOG_PATH = BASE_PATH + "logs/:logID";
 export const LOG_PATH_LINK = BASE_PATH + "logs/";
+export const QUERIES_PATH = BASE_PATH + "queries";
 export const API_BASE = BASE_PATH + "api/";
 export const API_REQUESTS_PATH = API_BASE + "requests";
 export const API_REQUEST_PATH = API_REQUESTS_PATH + "/:requestID";
@@ -13,6 +14,9 @@ export const API_REQUEST_PARAM = ":requestID";
 export const API_LOGS_PATH = API_BASE + "logs";
 export const API_LOG_PATH = API_LOGS_PATH + "/:logID";
 export const API_LOG_PARAM = ":logID";
+export const API_QUERIES_PATH = API_BASE + "queries";
+export const API_DUMPS_PATH = API_BASE + "dumps";
+export const API_PURGE_PATH = API_BASE + "purge";
 
 export default {
   BASE_PATH,

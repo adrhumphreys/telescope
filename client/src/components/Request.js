@@ -5,30 +5,23 @@ import { Tabs, Tab, Panel } from "./Tabs";
 import JSONView from "./JSONView";
 import Highlight from "./Highlight";
 import { logTable } from "./Logs";
-
-function renderDump(dumpObj, dumpStyle) {
-  const { dump, id } = dumpObj;
-
-  return (
-    <div key={id}>
-      <div
-        dangerouslySetInnerHTML={{ __html: dumpStyle }}
-        style={{ display: "none" }}
-      />
-      <div dangerouslySetInnerHTML={{ __html: dump }} />
-    </div>
-  );
-}
+import { queryTable } from "./Queries";
+import { dumpContent } from "./Dumps";
 
 function renderRelations(request) {
-  const { logs } = request;
+  const { logs, queries, dumps } = request;
+
   return (
     <div className="mt-4 bg-light">
       <Tabs>
         <ul className="nav nav-pills">
           <Tab>Logs</Tab>
+          <Tab>Queries</Tab>
+          <Tab>Dumps</Tab>
         </ul>
         <Panel>{logTable(logs)}</Panel>
+        <Panel>{queryTable(queries)}</Panel>
+        <Panel>{dumpContent(dumps, false)}</Panel>
       </Tabs>
     </div>
   );
@@ -119,8 +112,6 @@ function Request(props) {
     method,
     logs,
   } = request;
-
-  console.log(logs);
 
   const humanHappened = formatRelative(new Date(happened), new Date());
 

@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "@reach/router";
-import { BASE_PATH, REQUESTS_PATH, DUMPS_PATH, LOGS_PATH } from "../constants";
-import { RequestIcon, DumpIcon, LogIcon } from "../helpers/icons";
+import {
+  BASE_PATH,
+  REQUESTS_PATH,
+  DUMPS_PATH,
+  LOGS_PATH,
+  QUERIES_PATH,
+} from "../constants";
+import { RequestIcon, DumpIcon, LogIcon, QueryIcon } from "../helpers/icons";
 import classNames from "classnames";
 
 const NavLink = (props) => {
@@ -59,6 +65,15 @@ function Sidebar() {
         >
           <LogIcon />
           Logs
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink
+          to={QUERIES_PATH}
+          className="nav-link d-flex align-items-center pt-0"
+        >
+          <QueryIcon />
+          Queries
         </NavLink>
       </li>
     </ul>

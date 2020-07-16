@@ -22,6 +22,7 @@ use SilverStripe\ORM\HasManyList;
  * @property string MemoryUsed the peak of memory allocated by PHP
  * @method DumpDatum[]|HasManyList Dumps()
  * @method LogDatum[]|HasManyList Logs()
+ * @method QueryDatum[]|HasManyList Queries()
  */
 class RequestDatum extends DataObject implements APIResponse
 {
@@ -56,6 +57,7 @@ class RequestDatum extends DataObject implements APIResponse
     private static $has_many = [
         'Dumps' => DumpDatum::class,
         'Logs' => LogDatum::class,
+        'Queries' => QueryDatum::class,
     ];
 
     public function getAPIData(bool $includeRelations = false): array
@@ -77,6 +79,12 @@ class RequestDatum extends DataObject implements APIResponse
             $logs[] = $log->getAPIData();
         }
 
+        $queries = [];
+
+        foreach ($this->Queries() as $query) {
+            $queries[] = $query->getAPIData();
+        }
+
         return [
             'happened' => $this->Time,
             'hostname' => $this->HostName,
@@ -95,6 +103,7 @@ class RequestDatum extends DataObject implements APIResponse
             'dumps' => $dumps,
             'dumpStyle' => $dumpStyle,
             'logs' => $logs,
+            'queries' => $queries,
         ];
     }
 }

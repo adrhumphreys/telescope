@@ -3,13 +3,16 @@
 namespace AdrHumphreys\Telescope\Controllers;
 
 use AdrHumphreys\Telescope\Models\APIResponse;
+use AdrHumphreys\Telescope\Models\DumpDatum;
 use AdrHumphreys\Telescope\Models\LogDatum;
 use AdrHumphreys\Telescope\Models\QueryDatum;
 use AdrHumphreys\Telescope\Models\RequestDatum;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\DB;
 
 class Api extends Controller
 {
@@ -25,6 +28,8 @@ class Api extends Controller
         'requests',
         'logs',
         'queries',
+        'dumps',
+        'purge',
     ];
 
     public function index()
@@ -96,15 +101,37 @@ class Api extends Controller
 
         /** @var QueryDatum $query */
         foreach ($queries as $query) {
-            $data[] = [
-                'id' => $query->ID,
-                'queries' => json_decode($query->Queries),
-                'amount' => $query->Amount,
-                'created' => $query->Created,
-            ];
+            $data[] = $query->getAPIData();
         }
 
         return $this->generateJSONResponse($data);
+    }
+
+    public function dumps(HTTPRequest $request): HTTPResponse
+    {
+        if ($id = $request->param('ID')) {
+            return $this->genericDetailResponse(DumpDatum::class, (int) $id);
+        }
+
+        $data = [];
+        $dumps = DumpDatum::get()
+            ->sort('Created', 'DESC')
+            ->limit(3);
+
+        /** @var QueryDatum $query */
+        foreach ($dumps as $dump) {
+            $data[] = $dump->getAPIData();
+        }
+
+        return $this->generateJSONResponse($data);
+    }
+
+    public function purge(): void
+    {
+        DB::get_conn()->clearTable(Config::inst()->get(DumpDatum::class, 'table_name'));
+        DB::get_conn()->clearTable(Config::inst()->get(QueryDatum::class, 'table_name'));
+        DB::get_conn()->clearTable(Config::inst()->get(LogDatum::class, 'table_name'));
+        DB::get_conn()->clearTable(Config::inst()->get(RequestDatum::class, 'table_name'));
     }
 
     private function genericDetailResponse(string $className, int $id): HTTPResponse

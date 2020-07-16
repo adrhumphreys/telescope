@@ -2,8 +2,6 @@
 
 namespace AdrHumphreys\Telescope\Database;
 
-use AdrHumphreys\Telescope\Middleware\RequestMiddleware;
-use AdrHumphreys\Telescope\Models\QueryDatum;
 use SilverStripe\ORM\Connect\MySQLDatabase;
 use SilverStripe\ORM\DB;
 
@@ -11,14 +9,22 @@ class MySQLQueryRecorder extends MySQLDatabase
 {
     protected function benchmarkQuery($sql, $callback, $parameters = array())
     {
+        // Lets not record queries to telescope and cause recursion
+        // Also lets us pretend we don't impact performance 👏
         if (strpos($sql, 'Telescope_') !== false) {
             return parent::benchmarkQuery($sql, $callback, $parameters);
         }
 
-        // Record the queries
-        $queryData = DB::inline_parameters($sql, $parameters);
-        RecordedQueries::add($queryData);
+        // Time the query
+        $startTime = microtime(true);
+        $result = parent::benchmarkQuery($sql, $callback, $parameters);
+        $duarationAsSeconds = microtime(true) - $startTime;
+        $duration = round($duarationAsSeconds * 1000, 4);
 
-        return parent::benchmarkQuery($sql, $callback, $parameters);
+        // Record the query
+        $queryData = DB::inline_parameters($sql, $parameters);
+        RecordedQueries::add($queryData, $duration);
+
+        return $result;
     }
 }

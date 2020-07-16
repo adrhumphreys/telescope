@@ -10,6 +10,7 @@ use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @property string Dump
+ * @property int RequestDatumID
  */
 class DumpDatum extends DataObject implements APIResponse
 {
@@ -52,16 +53,11 @@ class DumpDatum extends DataObject implements APIResponse
 
     public function getAPIData(bool $includeRelations = false): array
     {
-        $data = [];
-        // TODO: Actually implement relation data
-        if ($includeRelations !== false) {
-            $data['relationData'] = 'relationData';
-        }
-
-        return array_merge($data, [
-           'id' => $this->ID,
-           'dump' => $this->Dump,
-           'created' => $this->Created,
-        ]);
+        return [
+            'id' => $this->ID,
+            'dump' => $this->Dump,
+            'created' => $this->Created,
+            'requestID' => $this->RequestDatumID,
+        ];
     }
 }

@@ -33,6 +33,12 @@ class QueryDatum extends DataObject implements APIResponse
 
     public function getAPIData(bool $includeRelations = false): array
     {
-        return [];
+        return [
+            'id' => $this->ID,
+            'queries' => json_decode($this->Queries),
+            'amount' => $this->Amount,
+            'created' => $this->Created,
+            'requestID' => $this->RequestDatumID,
+        ];
     }
 }

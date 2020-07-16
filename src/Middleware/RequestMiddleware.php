@@ -89,7 +89,7 @@ class RequestMiddleware implements HTTPMiddleware
     private static function shouldProcessPath(string $path): bool
     {
         foreach(self::IGNORED_PATHs as $ignoredPath) {
-            if (strpos($path, $ignoredPath) === 0){
+            if (strpos($path, $ignoredPath) !== false){
                 return false;
             }
         }

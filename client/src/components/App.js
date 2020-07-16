@@ -6,6 +6,7 @@ import Request from "./Request";
 import Dumps from "./Dumps";
 import Logs from "./Logs";
 import Log from "./Log";
+import Queries from "./Queries";
 import { Router } from "@reach/router";
 import {
   REQUESTS_PATH,
@@ -13,6 +14,7 @@ import {
   REQUEST_PATH,
   LOGS_PATH,
   LOG_PATH,
+  QUERIES_PATH,
 } from "../constants";
 
 function App() {
@@ -35,6 +37,7 @@ function App() {
               <Dumps path={DUMPS_PATH} />
               <Logs path={LOGS_PATH} />
               <Log path={LOG_PATH} />
+              <Queries path={QUERIES_PATH} />
             </Router>
           </div>
         </div>

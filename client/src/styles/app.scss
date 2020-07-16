@@ -101,6 +101,10 @@ a {
   text-transform: capitalize;
 }
 
+.trash-panda {
+  margin-left: 10px;
+}
+
 .trash-panda img {
   display: none;
 }
@@ -110,6 +114,7 @@ a {
   position: fixed;
   bottom: 10px;
   right: 10px;
+  z-index: 10;
 }
 
 .nav-pills .nav-link.active {
