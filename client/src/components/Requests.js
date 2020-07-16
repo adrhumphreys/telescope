@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "@reach/router";
-import { REQUEST_PATH_LINK, API_REQUESTS_PATH } from "../constants";
+import {
+  REQUEST_PATH_LINK,
+  API_REQUESTS_PATH,
+  API_LOGS_PATH,
+} from "../constants";
 import { formatRelative } from "date-fns";
 import { ViewIcon } from "../helpers/icons";
+import { fetchJson } from "../helpers/api";
+import EmptyContent from "./EmptyContent";
 
 function requestRow(request) {
   const { method, path, status, duration, happened, id } = request;
@@ -36,18 +42,15 @@ function requestRow(request) {
 }
 
 function Requests() {
-  const [requests, setRequests] = useState([]);
-
-  const fetchRequests = async () => {
-    fetch(API_REQUESTS_PATH)
-      .then((res) => res.json())
-      .then((res) => setRequests(res))
-      .catch((e) => console.error(e));
-  };
+  const [requests, setRequests] = useState(null);
 
   useEffect(() => {
-    fetchRequests();
+    fetchJson(API_REQUESTS_PATH, setRequests, () => setRequests(null));
   }, []);
+
+  if (requests === null) {
+    return <EmptyContent title="Requests" />;
+  }
 
   const requestRows = requests.map(requestRow);
 

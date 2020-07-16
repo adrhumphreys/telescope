@@ -8,15 +8,24 @@ use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
+use SilverStripe\Core\Config\Configurable;
 
 class LogHandler extends AbstractProcessingHandler
 {
+    use Configurable;
+
+    /**
+     * @config
+     * @var string[]
+     */
+    private static $skipClassesPartials = ['AdrHumphreys\\Telescope'];
+
     /*
      * Add the info to know where the message was sent from
      */
     public function handle(array $record)
     {
-        $this->pushProcessor(new IntrospectionProcessor(Logger::DEBUG, ['AdrHumphreys\\']));
+        $this->pushProcessor(new IntrospectionProcessor(Logger::DEBUG, self::config()->get('skipClassesPartials')));
         return parent::handle($record);
     }
 
