@@ -1,28 +1,37 @@
-import React, { Component } from "react";
-import { findDOMNode } from "react-dom";
-import hljs from "highlight.js";
-import php from "highlight.js/lib/languages/php";
-hljs.registerLanguage("php", php);
+import React from "react";
+import SyntaxHighlighter from "react-syntax-highlighter/dist/cjs/index";
+import { gruvboxDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-export default class Highlight extends Component {
-  componentDidMount() {
-    hljs.highlightBlock(findDOMNode(this.refs.code));
-  }
+function Highlight(props) {
+  const { children, language, line } = props;
 
-  componentDidUpdate() {
-    hljs.initHighlighting.called = false;
-    hljs.highlightBlock(findDOMNode(this.refs.code));
-  }
+  const startLine = line > 0 ? line - 20 : 0;
 
-  render() {
-    const { children, className, language, style } = this.props;
-
+  const lineStyle = (lineNumber) => {
     return (
-      <pre className={className} style={style}>
-        <code className={language} ref="code">
-          {children}
-        </code>
-      </pre>
+      startLine + lineNumber === line && {
+        style: {
+          backgroundColor: "#795548",
+          paddingTop: "4px",
+          paddingRight: "4px",
+          paddingBottom: "4px",
+        },
+      }
     );
-  }
+  };
+
+  return (
+    <SyntaxHighlighter
+      language={language}
+      style={gruvboxDark}
+      showLineNumbers={language === "php"}
+      wrapLines={true}
+      startingLineNumber={startLine}
+      lineProps={lineStyle}
+    >
+      {children}
+    </SyntaxHighlighter>
+  );
 }
+
+export default Highlight;

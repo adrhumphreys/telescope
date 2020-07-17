@@ -116,7 +116,7 @@ class Api extends Controller
         $data = [];
         $dumps = DumpDatum::get()
             ->sort('Created', 'DESC')
-            ->limit(3);
+            ->limit(self::LIMIT);
 
         /** @var QueryDatum $query */
         foreach ($dumps as $dump) {

@@ -79,7 +79,9 @@ function Log(props) {
             </div>
           </Panel>
           <Panel>
-            <Highlight language="php">{context}</Highlight>
+            <Highlight language="php" line={parsedEntry.extra.line}>
+              {context}
+            </Highlight>
           </Panel>
         </Tabs>
       </div>
