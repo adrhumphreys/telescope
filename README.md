@@ -20,3 +20,13 @@ AdrHumphreys\Telescope\Handlers\LogHandler:
   skipClassesPartials:
     - 'App\Helpers\SystemLog'
 ```
+
+## Examples:
+### Requests
+![](./requests.png)
+
+![](./request.png)
+### Logs
+![](./logs.png)
+
+![](./log.png)
