@@ -9,7 +9,7 @@
     "require": {
         "silverstripe/framework": "^4.0",
         "silverstripe/admin": "^1.0",
-        "symfony/var-dumper": "^5.1",
+        "symfony/var-dumper": "^5.0.8",
         "ext-json": "*"
     },
     "require-dev": {
